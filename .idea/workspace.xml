@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d51d1c6c-1fc2-4738-b700-878e68d512cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d51d1c6c-1fc2-4738-b700-878e68d512cc" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +97,10 @@
             <path>
               <item name="SenseEmotion_SelectMusic" type="b2602c69:ProjectViewProjectNode" />
               <item name="SenseEmotion_SelectMusic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SenseEmotion_SelectMusic" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -225,35 +227,35 @@
     <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics0_2018-12-08_18:46:51.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics1_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics1_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics2_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics2_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics9_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics9_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics64_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics64_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics68_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics68_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics71_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics71_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics198_2018-12-08_18:56:33.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics198_2018-12-08_18:56:33.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/lyrics_files/songs_lyrics0_2018-12-08_18:48:47.json">
+    <entry file="file://$PROJECT_DIR$/lyrics_files/songs_lyrics0_2018-12-08_18:48:47.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/music_play/scraping_song_lyrics.py">
+    <entry file="file://$PROJECT_DIR$/scraping_song_lyrics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-375">
           <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
