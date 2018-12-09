@@ -30,11 +30,6 @@ for file in files:
     data = json.loads(p)
 # 音声テキストのみ抽出
 
-
-def speech():
-    for i in data["results"]:
-        text = i["alternatives"][0]["transcript"]
-        print(text)
-
-
-speech()
+for i in data["results"]:
+    text = i["alternatives"][0]["transcript"]
+    print(text)
