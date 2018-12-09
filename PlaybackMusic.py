@@ -135,15 +135,20 @@ def choose_playback_music(retrieval_candidates):
 
     ・感情別歌詞データから検索クエリを取得し、曲名でSpotifyを検索する
     ・曲が見つかれば、曲を取得する
-    ・取得した曲のリストをreturn
+    ・取得した曲のリストplayback_candidatesをreturn
     """
     CLIENT_ID = config.CLIENT_ID_SPOTIFY
     CLIENT_SECRET = config.CLIENT_SECRET_SPOTIFY
     client_credentials_manager = spotipy.oauth2.SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
 
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    
+    # sp.devices()の利用にはspotipyのアップグレードが必要
+    # pip install git+https://github.com/plamere/spotipy.git --upgrade
+    # print(sp.devices())
+    # return 0
 
-    track_id_list = []
+    playback_candidates = []
     if retrieval_candidates != None:
         for i, candidate in enumerate(retrieval_candidates):
             song_name, singer = candidate[0], candidate[1] # (song_name, singer)
@@ -164,10 +169,9 @@ def choose_playback_music(retrieval_candidates):
                 if song_name == track_whole_name and singer == artist_name:
                     # 検索クエリと検索結果の曲名＆アーティスト名が一致したら、再生候補リストに追加
                     # 改善点：この条件指定だと、アレンジ版などが選ばれなかったりする
-                    track_id_list.append(track_id)
+                    playback_candidates.append((track_whole_name, artist_name ,track_id))
             print()
-        print("track_id_list: {}".format(track_id_list))
-        return track_id_list
+        return playback_candidates
     else:
         return None # 再生候補無し
             
@@ -200,6 +204,8 @@ if __name__ == "__main__":
     # 分析結果に基づいて再生する曲を探す
     # 検索クエリの取得
     retrieval_candidates = choose_emotion_dir_for_retrieval(conversation_emotions)
-    choose_playback_music(retrieval_candidates)
+    playback_candidates = choose_playback_music(retrieval_candidates)
+    print("playback_candidates:")
+    print(playback_candidates)
 
     # 再生
