@@ -60,5 +60,5 @@ if __name__ == "__main__":
     # JSONをデコード
     decoded_json = json.loads(analyze_response)
     # 分析結果を抽出
-    analyze_result = decoded_json["document_tone"]["tones"]
+    analyze_result = decoded_json["document_tone"]
     print("analyze_result = {}".format(analyze_result))
