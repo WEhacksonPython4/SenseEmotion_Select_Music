@@ -10,12 +10,7 @@ from pathlib import Path
 from TranslateText import translate_text
 from ToneAnalyzer import analyze_emotion_from_text
 import json
-
-CLIENT_ID = config.CLIENT_ID_SPOTIFY
-CLIENT_SECRET = config.CLIENT_SECRET_SPOTIFY
-client_credentials_manager = spotipy.oauth2.SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
-
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+from pprint import pprint
 
 def translate_and_store_lyrics():
     """
@@ -116,9 +111,9 @@ def choose_emotion_dir_for_retrieval(emotions):
 
     if chosen_emotions != []:
         for chosen_emotion in chosen_emotions:
-            for data in Path("./json_files").joinpath(chosen_emotion).iterdir():
+            for data in Path("./json_files").joinpath(chosen_emotion["tone_name"]).iterdir():
                 json_name = str(data).split("\\")[-1] # ディレクトリ階層ごとに区切って末尾のJSONファイル名を取り出す
-                with Path(data).joinpath(json_name).open() as f:
+                with Path(data).open(encoding="utf-8") as f:
                     # {"song_name": song_name, "singer": singer, "lyrics": lyrics, "translated_lyrics": translated_lyrics, "tone_name": tone_name}
                     lyrics_json_for_emotion = json.load(f)
                     # 各情報を取得
@@ -130,35 +125,57 @@ def choose_emotion_dir_for_retrieval(emotions):
     else: # 感情分析の結果、4つの感情ラベルが無い
         return None # 該当する曲は無し
 
-def playback_music():
+def choose_playback_music(retrieval_candidates):
     """
     再生する曲を選択する
-    
-    ・感情別歌詞データから検索クエリを取得し、"title"（曲名）でSpotifyを検索する
-    ・検索した曲があれば、曲を取得する
-    ・取得したら曲を再生
+    ・Anger -> Joy
+    ・Sadness -> Joy
+    ・Fear -> Anger? Joy
+    ・Joy -> Joy
+
+    ・感情別歌詞データから検索クエリを取得し、曲名でSpotifyを検索する
+    ・曲が見つかれば、曲を取得する
+    ・取得した曲のリストをreturn
     """
-    # 検索クエリの取得
-    retrieve_condidates = choose_emotion_dir_for_retrieval(emotions)
+    CLIENT_ID = config.CLIENT_ID_SPOTIFY
+    CLIENT_SECRET = config.CLIENT_SECRET_SPOTIFY
+    client_credentials_manager = spotipy.oauth2.SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
 
-# ※Spotifyで曲を再生（playback）できるか？
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-"""
-# サンプルコード1
-results = sp.search(q='weezer', limit=20)
-for lyrics, t in enumerate(results['tracks']['items']):
-    print(' ', lyrics, t['name'])
+    track_id_list = []
+    if retrieval_candidates != None:
+        for i, candidate in enumerate(retrieval_candidates):
+            song_name, singer = candidate[0], candidate[1] # (song_name, singer)
+            print("{}th retrival ... song_name, singer = {}, {}".format(i + 1, song_name, singer))
 
-# サンプルコード2
-playlists = sp.user_playlists('spotify')
-while playlists:
-    for lyrics, playlist in enumerate(playlists['items']):
-        print("%4d %s %s" % (lyrics + 1 + playlists['offset'], playlist['uri'],  playlist['name']))
-    if playlists['next']:
-        playlists = sp.next(playlists)
+            # 曲名で検索
+            result_dict = sp.search(q='track:' + song_name, type='track')
+
+            # 更にアーティスト名で絞り込む
+            tracks_items = result_dict["tracks"]["items"]
+            for j, item_in_track in enumerate(tracks_items):
+                print("{}th track".format(j + 1))
+                track_whole_name = item_in_track["name"] # 検索された曲の名前（完全一致バージョン）
+                artist_name = item_in_track["artists"][0]["name"] # 検索された曲のアーティスト名
+                track_id = item_in_track["id"] # 検索された曲のID（これを曲の再生で使う）
+                print("track_whole_name = {}, artist_name = {}, track_id = {}".format(track_whole_name, artist_name, track_id))
+
+                if song_name == track_whole_name and singer == artist_name:
+                    # 検索クエリと検索結果の曲名＆アーティスト名が一致したら、再生候補リストに追加
+                    # 改善点：この条件指定だと、アレンジ版などが選ばれなかったりする
+                    track_id_list.append(track_id)
+            print()
+        print("track_id_list: {}".format(track_id_list))
+        return track_id_list
     else:
-        playlists = None
-"""
+        return None # 再生候補無し
+            
+def playback():
+    """
+    再生候補となる曲のIDリストからランダムで曲を選択し、再生する
+    """
+    return None
 
 if __name__ == "__main__":
     # データ作成済みなら以下は実行不要
@@ -166,3 +183,23 @@ if __name__ == "__main__":
     # print("Finished translating and storing lyrics.")
     # analyze_and_choose_emotion()
     # print("Finished analyzing and choosing emotion.")
+
+    print("Let's Playback music!")
+    print()
+    # 会話データの入力
+    text = "Hello, I'm happy!"
+    
+    # 会話データからテキストを抽出
+    
+    # テキストを日本語から英語に翻訳
+    
+    # 翻訳されたテキストを感情分析
+    decoded_json = json.loads(analyze_emotion_from_text(text))
+    conversation_emotions = decoded_json["document_tone"]["tones"]
+    
+    # 分析結果に基づいて再生する曲を探す
+    # 検索クエリの取得
+    retrieval_candidates = choose_emotion_dir_for_retrieval(conversation_emotions)
+    choose_playback_music(retrieval_candidates)
+
+    # 再生
