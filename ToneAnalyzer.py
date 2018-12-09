@@ -25,7 +25,7 @@ def analyze_emotion_from_text(text):
             'application/json'
         ).get_result()
         
-        return json.dumps(tone_analysis, indent=4)
+        return json.dumps(tone_analysis, indent=4, ensure_ascii=False)
 
     except WatsonApiException as ex:
         print("Method failed with status code " + str(ex.code) + ": " + ex.message)
