@@ -5,7 +5,7 @@ from os.path import join, dirname
 import config
 
 speech_to_text = SpeechToTextV1(
-    iam_apikey='config.API_KEY_TONEANALYZER',
+    iam_apikey=config.API_KEY_SPEEECH_TO_TEXT,
     url='https://gateway-tok.watsonplatform.net/speech-to-text/api'
 )
 
