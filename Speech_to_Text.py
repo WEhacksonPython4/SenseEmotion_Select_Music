@@ -18,6 +18,10 @@ speech_to_text = SpeechToTextV1(
 
 
 def speech_text():
+    """
+    音声ファイルからテキストにする
+    Watson - Text to Speech
+    """
 
     # 音声入力したファイル
     files = ['Speech.wav']
@@ -42,20 +46,19 @@ def speech_text():
 
     for i in data["results"]:
         text = i["alternatives"][0]["transcript"]
-        print(text)
 
     t = translate_text(text)
 
     dic_English = json.loads(t)
 
-    print(dic_English)
-
     p = dic_English["translations"]
-    print(p)
 
-    result = analyze_emotion_from_text(text)
-
-    print(result)
+    for i in p:
+        a = i['translation']
+    json_emotion = analyze_emotion_from_text(a)
+    emotion_dict = json.loads(json_emotion)
+    a = emotion_dict['document_tone']['tones'][0]['tone_name']
+    print(a)
 
 
 # rangeに何回レコーディングをループさせるか
