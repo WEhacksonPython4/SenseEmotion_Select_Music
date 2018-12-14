@@ -6,10 +6,8 @@ import time
 import threading
 import Speech_to_Text
 
+
 # 何秒ごとにレコーディングさせるか
-
-
-# rangeに何回レコーディングをループさせるか
 
 def timekeep():
     """
@@ -37,11 +35,11 @@ def recoding():
 
     print("* recording")
 
-    frames = []
 
-    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
-        frames.append(data)
+    frames = [stream.read(CHUNK)
+              for i in range(int(RATE / CHUNK * RECORD_SECONDS))]
+
+
 
     print("* done recording")
 
@@ -54,4 +52,4 @@ def recoding():
     wf.setsampwidth(audio.get_sample_size(FORMAT))
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
-    wf.close()
+
