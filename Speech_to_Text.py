@@ -23,7 +23,7 @@ def speech_text():
     Watson - Text to Speech
     """
     try:
-        # 音声入力したファイル
+        # recodingから録音したファイル
         files = ['Speech.wav']
 
         for file in files:
@@ -42,11 +42,11 @@ def speech_text():
                            indent=2, ensure_ascii=False)
 
             data = json.loads(p)
-        # 音声テキストのみ抽出
+        # 音声テキスト（日本語）のみ抽出
 
         for i in data["results"]:
             text = i["alternatives"][0]["transcript"]
-
+        # 翻訳APIで英語に変換
         t = translate_text(text)
 
         dic_English = json.loads(t)
@@ -55,10 +55,14 @@ def speech_text():
 
         for i in p:
             a = i['translation']
+        # 英語テキストを感情分析にかける
         json_emotion = analyze_emotion_from_text(a)
         emotion_dict = json.loads(json_emotion)
         result = emotion_dict['document_tone']['tones'][0]['tone_name']
+        # リストに追加してみてresultが正しく出力されるか確認
         emotion_list.append(result)
+        # [最終結果:感情を表す英単語の文字列]
+        return result
     except UnboundLocalError:
         print("もっとはっきりしゃべってください！！")
     except IndexError:
@@ -83,8 +87,8 @@ for i in range(1, 3):
         t.join()
 
 
-# [最終結果:感情を表す英単語の文字列]
 emotion_result = emotion_list[0]
-
+# resultが正しく出力されるか確認
 print(emotion_list)
+
 print(emotion_result)
